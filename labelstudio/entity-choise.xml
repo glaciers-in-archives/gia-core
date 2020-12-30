@@ -1,0 +1,10 @@
+<View>
+    <Image name="image" value="$image"/>
+    <Text name="text-1" value="$text"/>
+    <Choices name="choice" toName="image" showInLine="true">
+{% for label in labels %}        <Choice value="{{ label|e }}" />
+{% endfor %}
+    </Choices>
+    <TextArea name="year" toName="image" maxSubmissions="1" rows="1" placeholder="year"></TextArea>
+    <TextArea name="author" toName="image" maxSubmissions="1" rows="1" placeholder="$author"></TextArea>
+</View>
