@@ -1,5 +1,0 @@
-requests==2.25.0
-rdflib==5.0.0
-minio==6.0.0
-ipython==7.16.1
-prefect==0.14.1
