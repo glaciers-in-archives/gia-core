@@ -4,10 +4,9 @@ from typing import List, Optional
 
 from rdflib import Literal, URIRef
 
-from datamodel.annotation import Annotation
-
 from ..service.fuseki import Fuseki
 from ..service.object_storage import ObjectStorage
+from .annotation import Annotation
 from .utils.namespaces import GIA, RDF, SCHEMA, init_graph
 
 
