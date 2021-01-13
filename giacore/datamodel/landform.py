@@ -15,8 +15,8 @@ class Landform:
     description: str
     latitude: float = field(repr=False)
     longitude: float = field(repr=False)
-    wikidata: URIRef
     local_identifier: str = field(init=False)
+    wikidata: Optional[URIRef] = field(default=None, repr=False)
     parts: Optional[List[URIRef]] = field(default=None, repr=False)
     parent: Optional[URIRef] = field(default_factory=list, repr=False)
 
