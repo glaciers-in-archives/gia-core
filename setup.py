@@ -1,9 +1,9 @@
-from setuptools import setup
+import setuptools
 
-setup(
+setuptools.setup(
     name='giacore',
     version='0.1.0',
-    py_modules=['giacore'],
+    py_modules=setuptools.find_packages(),
     entry_points='''
         [console_scripts]
         giacore=giacore:giacore
