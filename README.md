@@ -5,8 +5,10 @@ GiA Core is a Python module containing much of the core functionality utilized b
 ## Installation
 
 ```bash
-pip install git+https://github.com/glaciers-in-archives/gia-core.git
+pip install https://github.com/glaciers-in-archives/gia-core/archive/0.1.0.tar.gz
 ```
+
+Note: You will need to install the dependencies manually.
 
 ## High-level modules in GiA Core
 
