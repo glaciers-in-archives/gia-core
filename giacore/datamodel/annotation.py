@@ -11,14 +11,13 @@ from .utils.namespaces import DCTERMS, OA, PROV, RDF, init_graph
 @dataclass()
 class Annotation:
     created: date = field(init=False)
-    contributor: URIRef
-    creator: URIRef
+    contributor: Optional[URIRef]
+    creator: Optional[URIRef]
     derived_from: Optional[URIRef]
     target: URIRef
     body: tuple
     motivation: URIRef
     local_identifier: str = field(init=False)
-    source: URIRef
 
     def __post_init__(self):
         self.local_identifier = 'oa-' + str(random.randrange(101, 10000))
@@ -38,7 +37,6 @@ class Annotation:
         graph.add((annotation, DCTERMS.creator, self.creator))
         graph.add((annotation, OA.hasTarget, self.target))
         graph.add((annotation, OA.hasBody, self.body))
-        graph.add((annotation, OA.hasBody, (OA.hasSource, self.source)))
         graph.add((annotation, OA.motivatedBy. self.motivation))
 
         if self.derived_from:
