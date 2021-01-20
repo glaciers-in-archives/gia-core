@@ -19,7 +19,7 @@ class Annotation:
     source: URIRef
 
     def __post_init__(self):
-        self.local_identifier = 'oa-' + str(random.randrange(101, 1000))
+        self.local_identifier = 'oa-' + str(random.randrange(101, 10000))
         self.created = Literal(date.today())
 
     @property
