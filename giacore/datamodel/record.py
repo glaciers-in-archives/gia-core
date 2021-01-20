@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 import random
-from typing import List, Optional
+from typing import List, Optional, Union
 
 from rdflib import Literal, URIRef
 
@@ -13,10 +13,10 @@ from .utils.namespaces import GIA, RDF, SCHEMA, init_graph
 @dataclass()
 class Record:
     entities: List[URIRef]
-    description: Optional[str]
-    publisher: str
-    creator: Optional[str]
-    created: Optional[str]
+    description: Optional[Union[str, Literal]]
+    publisher: Union[str, Literal]
+    creator: Optional[Union[str, Literal]]
+    created: Optional[Union[str, Literal]]
     media_license: Optional[URIRef]
     local_identifier: str = field(init=False)
     record_type: Optional[URIRef]
