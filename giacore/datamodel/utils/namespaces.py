@@ -2,7 +2,7 @@ from rdflib import Namespace, Graph
 
 RDF = Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
 SCHEMA = Namespace('https://schema.org/')
-RDFS = Namespace('http://www.w3.org/2000/01/rdf-schema')
+RDFS = Namespace('http://www.w3.org/2000/01/rdf-schema#')
 DCTERMS = Namespace('http://purl.org/dc/terms/')
 WD = Namespace('http://www.wikidata.org/entity/')
 OA = Namespace('http://www.w3.org/ns/oa#')
