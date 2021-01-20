@@ -1,10 +1,11 @@
+import random
 from dataclasses import dataclass, field
 from datetime import date
-import random
+from typing import Optional
 
 from rdflib import Graph, Literal, URIRef
 
-from .utils.namespaces import DCTERMS, OA, RDF, init_graph
+from .utils.namespaces import DCTERMS, OA, PROV, RDF, init_graph
 
 
 @dataclass()
@@ -12,6 +13,7 @@ class Annotation:
     created: date = field(init=False)
     contributor: URIRef
     creator: URIRef
+    derived_from: Optional[URIRef]
     target: URIRef
     body: tuple
     motivation: URIRef
@@ -38,5 +40,8 @@ class Annotation:
         graph.add((annotation, OA.hasBody, self.body))
         graph.add((annotation, OA.hasBody, (OA.hasSource, self.source)))
         graph.add((annotation, OA.motivatedBy. self.motivation))
+
+        if self.derived_from:
+            graph.add((annotation, PROV.wasDerivedFrom, self.derived_from))
 
         return graph
