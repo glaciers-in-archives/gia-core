@@ -33,13 +33,17 @@ class Annotation:
         annotation = self.uri
 
         graph.add((annotation, RDF.type, OA.Annotation))
-        graph.add((annotation, DCTERMS.contributor, self.contributor))
-        graph.add((annotation, DCTERMS.creator, self.creator))
         graph.add((annotation, OA.hasTarget, self.target))
         graph.add((annotation, OA.hasBody, self.body))
         graph.add((annotation, OA.motivatedBy. self.motivation))
 
         if self.derived_from:
             graph.add((annotation, PROV.wasDerivedFrom, self.derived_from))
+
+        if self.contributor:
+            graph.add((annotation, DCTERMS.contributor, self.contributor))
+
+        if self.contributor:
+            graph.add((annotation, DCTERMS.creator, self.creator))
 
         return graph
