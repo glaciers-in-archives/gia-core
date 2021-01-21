@@ -8,7 +8,6 @@ WD = Namespace('http://www.wikidata.org/entity/')
 OA = Namespace('http://www.w3.org/ns/oa#')
 AS = Namespace('http://www.w3.org/ns/activitystreams#')
 GIA = Namespace('https://www.glaciersinarchives.org/')
-DC = Namespace('http://purl.org/dc/elements/1.1/')
 PROV = Namespace('http://www.w3.org/ns/prov#')
 GIAT = Namespace('https://www.glaciersinarchives.org/terms#')
 
@@ -22,7 +21,6 @@ def init_graph() -> Graph:
     graph.bind('OA', OA)
     graph.bind('AS', AS)
     graph.bind('GIA', GIA)
-    graph.bind('DC', DC)
     graph.bind('PROV', PROV)
 
     return graph
