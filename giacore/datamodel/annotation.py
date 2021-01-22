@@ -3,47 +3,41 @@ from dataclasses import dataclass, field
 from datetime import date
 from typing import Optional
 
-from rdflib import Graph, Literal, URIRef
+from rdflib import Literal, URIRef
 
-from .utils.namespaces import DCTERMS, OA, PROV, RDF, init_graph
+from .utils.namespaces import GIA, OA
 
 
 @dataclass()
 class Annotation:
-    created: date = field(init=False)
-    contributor: Optional[URIRef]
-    creator: Optional[URIRef]
-    derived_from: Optional[URIRef]
-    target: URIRef
+    created: date = field(init=False, repr=False)
     body: tuple
-    motivation: URIRef
+    motivation: str
+    contributor: Optional[str] = field(default=None, repr=False)
+    creator: Optional[str] = field(default=None, repr=False)
+    derived_from: Optional[URIRef] = field(default=None, repr=False)
     local_identifier: str = field(init=False)
 
     def __post_init__(self):
         self.local_identifier = 'oa-' + str(random.randrange(101, 10000))
         self.created = Literal(date.today())
 
-    @property
-    def uri(self) -> URIRef:
-        return URIRef(str(self.target) + '#' + self.local_identifier)
+        valid_motivations = ['linking', 'describing', 'classifying']
+        if self.motivation in valid_motivations:
+            self.motivation = URIRef(str(OA) + self.motivation)
+        else:
+            raise ValueError(f'Invalid motivation: {self.motivation}')
 
-    @property
-    def graph(self) -> Graph:
-        graph = init_graph()
-        annotation = self.uri
-
-        graph.add((annotation, RDF.type, OA.Annotation))
-        graph.add((annotation, OA.hasTarget, self.target))
-        graph.add((annotation, OA.hasBody, self.body))
-        graph.add((annotation, OA.motivatedBy. self.motivation))
-
-        if self.derived_from:
-            graph.add((annotation, PROV.wasDerivedFrom, self.derived_from))
+        valid_agents = ['machine', 'person']
 
         if self.contributor:
-            graph.add((annotation, DCTERMS.contributor, self.contributor))
+            if self.contributor in valid_agents:
+                self.contributor = URIRef(str(GIA) + self.contributor)
+            else:
+                raise ValueError(f'Invalid contributor: {self.contributor}')
 
-        if self.contributor:
-            graph.add((annotation, DCTERMS.creator, self.creator))
-
-        return graph
+        if self.creator:
+            if self.creator in valid_agents:
+                self.creator = URIRef(str(GIA) + self.creator)
+            else:
+                raise ValueError(f'Invalid creator: {self.creator}')
