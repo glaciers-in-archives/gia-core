@@ -33,9 +33,8 @@ class ObjectStorage:
     def bucket_exists(self)-> bool:
         return self.client.bucket_exists(self.bucket)
 
-    @property
-    def objects(self, prefix: Optional[str] = None) -> Generator[Object, None, None]:
-        for obj in self.client.list_objects_v2(self.bucket, prefix=prefix):
+    def list_objects(self, prefix: Optional[str] = None) -> Generator[Object, None, None]:
+        for obj in self.client.list_objects_v2(self.bucket, prefix=prefix, recursive=True):
             yield obj
 
     def put_object(self, content: str, location: str) -> None:
