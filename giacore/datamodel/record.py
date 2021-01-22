@@ -41,8 +41,6 @@ class Record:
             graph.add((record, SCHEMA.sameAs, same_as))
 
         for annotation in self.annotations:
-            graph.add((record, annotation.body[0], annotation.body[1]))
-
             ag = init_graph()
             annotation_uri = URIRef(f'{self.uri}#{annotation.local_identifier}')
             ag.add((annotation_uri, OA.hasTarget, self.uri))
@@ -54,8 +52,10 @@ class Record:
             ag.add((annotation_uri, OA.hasBody, body))
             if annotation.body[0] == GIAT.type:
                 ag.add((body, GIAT.type, annotation.body[1]))
+                graph.add((record, RDF.type, annotation.body[1]))
             else:
                 ag.add((body, annotation.body[0], annotation.body[1]))
+                graph.add((record, annotation.body[0], annotation.body[1]))
 
             if annotation.creator:
                 graph.add((annotation_uri, DCTERMS.creator, annotation.creator))
