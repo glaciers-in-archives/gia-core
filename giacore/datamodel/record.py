@@ -20,7 +20,7 @@ class Record:
     image: Optional[URIRef] = field(default=None, repr=False)
 
     def __post_init__(self):
-        self.local_identifier = str(random.randrange(101, 10000))
+        self.local_identifier = str(random.randrange(101, 100000))
 
     @property
     def uri(self) -> URIRef:
