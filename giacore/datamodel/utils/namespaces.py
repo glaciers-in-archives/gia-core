@@ -18,9 +18,9 @@ def init_graph() -> Graph:
     graph.bind('rdfs', RDFS)
     graph.bind('dcterms', DCTERMS)
     graph.bind('wd', WD)
-    graph.bind('OA', OA)
-    graph.bind('AS', AS)
-    graph.bind('GIA', GIA)
-    graph.bind('PROV', PROV)
+    graph.bind('oa', OA)
+    graph.bind('as', AS)
+    graph.bind('gia', GIA)
+    graph.bind('prov', PROV)
 
     return graph
