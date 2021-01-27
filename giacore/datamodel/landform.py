@@ -46,17 +46,3 @@ class Landform:
             graph.add((record, DCTERMS.partOf, self.parent))
 
         return graph.serialize(format='xml').decode('utf-8')
-
-    def store(self, endpoint=None, access_key=None, secret_key=None) -> None:
-        objstore = ObjectStorage(
-            bucket='record-store',
-            endpoint=endpoint,
-            access_key=access_key,
-            secret_key=secret_key,
-        )
-
-        objstore.put_object(self.rdf, (str(self.uri).replace(str(GIA), '')))
-
-    def index(self, endpoint=None) -> None:
-        fuseki_client = Fuseki(endpoint=endpoint)
-        fuseki_client.index(self.rdf)
