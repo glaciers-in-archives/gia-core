@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 import random
 from typing import List, Optional
 
-from rdflib import Literal, URIRef
+from rdflib import Literal, URIRef, XSD
 
 from ..service.fuseki import Fuseki
 from ..service.object_storage import ObjectStorage
@@ -36,8 +36,8 @@ class Landform:
         graph.add((record, SCHEMA.name, Literal(self.name, lang='en')))
         graph.add((record, SCHEMA.description, Literal(self.description, lang='en')))
         graph.add((record, RDFS.seeAlso, self.wikidata))
-        graph.add((record, SCHEMA.latitude, Literal(self.latitude)))
-        graph.add((record, SCHEMA.longitude, Literal(self.longitude)))
+        graph.add((record, SCHEMA.latitude, Literal(self.latitude, datatype=XSD.decimal)))
+        graph.add((record, SCHEMA.longitude, Literal(self.longitude, datatype=XSD.decimal)))
         
         for part in self.parts or []:
             graph.add((record, DCTERMS.hasPart, part))
