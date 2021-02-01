@@ -4,8 +4,6 @@ from typing import List, Optional
 
 from rdflib import Literal, URIRef, XSD
 
-from ..service.fuseki import Fuseki
-from ..service.object_storage import ObjectStorage
 from .utils.namespaces import DCTERMS, GIA, RDF, RDFS, SCHEMA, init_graph
 
 

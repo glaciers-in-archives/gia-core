@@ -4,8 +4,6 @@ from typing import List, Optional, Union
 
 from rdflib import BNode, Literal, URIRef
 
-from ..service.fuseki import Fuseki
-from ..service.object_storage import ObjectStorage
 from .annotation import Annotation
 from .utils.namespaces import DCTERMS, GIA, GIAT, OA, PROV, RDF, SCHEMA, init_graph
 
