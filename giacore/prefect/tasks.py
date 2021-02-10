@@ -38,3 +38,19 @@ def index_all(prefix: Optional[str]=None, store_endpoint=None, store_access_key=
             data = objstore.get_object(o.object_name)
             fuseki_client = Fuseki(endpoint=index_endpoint)
             fuseki_client.index(data)
+
+@task
+def replace_string_store(old: str, new: str, prefix: Optional[str]=None, store_endpoint=None, store_access_key=None, store_secret_key=None) -> None:
+    objstore = ObjectStorage(
+        bucket='record-store',
+        endpoint=store_endpoint,
+        access_key=store_access_key,
+        secret_key=store_secret_key,
+    )
+
+    for o in objstore.list_objects(prefix=prefix):
+        if not o.is_dir:
+            data = objstore.get_object(o.object_name)
+            if old in data:
+                data = data.replace(old, new)
+                objstore.put_object(data, o.object_name)
