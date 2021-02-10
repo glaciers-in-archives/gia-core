@@ -32,12 +32,12 @@ class Annotation:
 
         if self.contributor:
             if self.contributor in valid_agents:
-                self.contributor = URIRef(str(GIA) + self.contributor)
+                self.contributor = URIRef(str(GIA) + f'concept/agent/{self.contributor}')
             else:
                 raise ValueError(f'Invalid contributor: {self.contributor}')
 
         if self.creator:
             if self.creator in valid_agents:
-                self.creator = URIRef(str(GIA) + self.creator)
+                self.creator = URIRef(str(GIA) + f'concept/agent/{self.creator}')
             else:
                 raise ValueError(f'Invalid creator: {self.creator}')
