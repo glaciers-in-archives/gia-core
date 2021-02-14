@@ -54,3 +54,8 @@ def replace_string_store(old: str, new: str, prefix: Optional[str]=None, store_e
             if old in data:
                 data = data.replace(old, new)
                 objstore.put_object(data, o.object_name)
+
+@task
+def clean_index(index_endpoint=None) -> None:
+    f = Fuseki(endpoint=index_endpoint)
+    f.clean_index()
