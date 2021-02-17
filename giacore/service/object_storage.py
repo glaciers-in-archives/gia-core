@@ -42,13 +42,13 @@ class ObjectStorage:
 
         self.client.put_object(
             self.bucket,
-            location,
+            f'{location}.xml',
             content_bytes,
             len(content_bytes.getvalue()),
         )
 
     def get_object(self, obj: str) -> str:
-        response = self.client.get_object(self.bucket, obj)
+        response = self.client.get_object(self.bucket, f'{obj}.xml')
         data = response.data.decode('utf-8')
         response.close()
         response.release_conn()
