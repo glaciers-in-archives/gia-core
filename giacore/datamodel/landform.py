@@ -4,7 +4,7 @@ from typing import List, Optional
 
 from rdflib import Literal, URIRef, XSD
 
-from .utils.namespaces import DCTERMS, GIA, RDF, RDFS, SCHEMA, init_graph
+from .utils.namespaces import DCTERMS, GIA, RDF, SCHEMA, init_graph
 
 
 @dataclass()
@@ -15,6 +15,7 @@ class Landform:
     longitude: float = field(repr=False)
     local_identifier: str = field(init=False)
     wikidata: Optional[URIRef] = field(default=None, repr=False)
+    wikipedia: Optional[URIRef] = field(default=None, repr=False)
     parts: Optional[List[URIRef]] = field(default=None, repr=False)
     parent: Optional[URIRef] = field(default_factory=list, repr=False)
 
@@ -33,10 +34,11 @@ class Landform:
         graph.add((record, RDF.type, SCHEMA.Landform))
         graph.add((record, SCHEMA.name, Literal(self.name, lang='en')))
         graph.add((record, SCHEMA.description, Literal(self.description, lang='en')))
-        graph.add((record, RDFS.seeAlso, self.wikidata))
+        graph.add((record, SCHEMA.sameAs, self.wikidata))
+        graph.add((record, SCHEMA.relatedlink, self.wikipedia))
         graph.add((record, SCHEMA.latitude, Literal(self.latitude, datatype=XSD.decimal)))
         graph.add((record, SCHEMA.longitude, Literal(self.longitude, datatype=XSD.decimal)))
-        
+
         for part in self.parts or []:
             graph.add((record, DCTERMS.hasPart, part))
 
