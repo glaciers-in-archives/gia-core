@@ -4,6 +4,7 @@ from dataclasses import dataclass, field
 from typing import Generator, Optional
 
 from minio import Minio, Object
+from minio.error import NoSuchKey
 
 
 @dataclass
@@ -53,3 +54,10 @@ class ObjectStorage:
         response.close()
         response.release_conn()
         return data
+
+    def object_exists(self, obj: str) -> bool:
+        try:
+            self.client.stat_object(self.bucket, f'{obj}.xml')
+        except NoSuchKey:
+            return False
+        return True
