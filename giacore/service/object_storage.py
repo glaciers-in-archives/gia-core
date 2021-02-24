@@ -40,6 +40,7 @@ class ObjectStorage:
 
     def put_object(self, content: str, location: str) -> None:
         content_bytes = io.BytesIO(bytes(content, 'utf-8'))
+        location = self.normalize_object_name(location)
 
         self.client.put_object(
             self.bucket,
@@ -49,6 +50,7 @@ class ObjectStorage:
         )
 
     def get_object(self, obj: str) -> str:
+        obj = self.normalize_object_name(obj)
         response = self.client.get_object(self.bucket, f'{obj}.xml')
         data = response.data.decode('utf-8')
         response.close()
@@ -56,8 +58,15 @@ class ObjectStorage:
         return data
 
     def object_exists(self, obj: str) -> bool:
+        obj = self.normalize_object_name(obj)
         try:
             self.client.stat_object(self.bucket, f'{obj}.xml')
         except NoSuchKey:
             return False
         return True
+
+    @staticmethod
+    def normalize_object_name(obj_name: str) -> str:
+        if obj_name.endswith('.xml'):
+            return obj_name.replace('.xml', '')
+        return obj_name
