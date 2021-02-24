@@ -5,7 +5,7 @@ from typing import List, Optional, Union
 from rdflib import BNode, Literal, URIRef
 
 from .annotation import Annotation
-from .utils.namespaces import DCTERMS, GIA, GIAT, OA, PROV, RDF, SCHEMA, init_graph
+from .utils.namespaces import DCTERMS, GIA, OA, PROV, RDF, SCHEMA, init_graph
 
 
 @dataclass()
@@ -29,6 +29,7 @@ class Record:
         graph = init_graph()
         record = self.uri
 
+        graph.add((record, RDF.type, SCHEMA.CreativeWork))
         graph.add((record, SCHEMA.provider, Literal(self.publisher)))
         graph.add((record, DCTERMS.source, self.source))
 
@@ -48,12 +49,8 @@ class Record:
 
             body = BNode()
             ag.add((annotation_uri, OA.hasBody, body))
-            if annotation.body[0] == GIAT.type:
-                ag.add((body, GIAT.type, annotation.body[1]))
-                graph.add((record, RDF.type, annotation.body[1]))
-            else:
-                ag.add((body, annotation.body[0], annotation.body[1]))
-                graph.add((record, annotation.body[0], annotation.body[1]))
+            ag.add((body, annotation.body[0], annotation.body[1]))
+            graph.add((record, annotation.body[0], annotation.body[1]))
 
             if annotation.creator:
                 graph.add((annotation_uri, DCTERMS.creator, annotation.creator))

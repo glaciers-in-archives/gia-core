@@ -9,7 +9,6 @@ OA = Namespace('http://www.w3.org/ns/oa#')
 AS = Namespace('http://www.w3.org/ns/activitystreams#')
 GIA = Namespace('https://www.glaciersinarchives.org/')
 PROV = Namespace('http://www.w3.org/ns/prov#')
-GIAT = Namespace('https://www.glaciersinarchives.org/terms#')
 
 def init_graph() -> Graph:
     graph = Graph()
