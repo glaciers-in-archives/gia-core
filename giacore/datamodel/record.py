@@ -31,7 +31,7 @@ class Record:
 
         graph.add((record, RDF.type, SCHEMA.CreativeWork))
         graph.add((record, SCHEMA.provider, Literal(self.publisher)))
-        graph.add((record, DCTERMS.source, self.source))
+        graph.add((record, SCHEMA.isBasedOn, self.source))
 
         if self.image:
             graph.add((record, SCHEMA.image, self.image))
