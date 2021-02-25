@@ -5,7 +5,7 @@ from typing import Optional
 
 from rdflib import Literal, URIRef
 
-from .utils.namespaces import GIA, OA
+from .utils.namespaces import GIA, OA, SCHEMA
 
 
 @dataclass()
@@ -21,6 +21,11 @@ class Annotation:
     def __post_init__(self):
         self.local_identifier = 'oa-' + str(random.randrange(101, 10000))
         self.created = Literal(date.today())
+
+        allowed_statement_properties = [SCHEMA.license, SCHEMA.additionalType, SCHEMA.creator, SCHEMA.temporial, SCHEMA.spatial, SCHEMA.description]
+
+        if not self.body[0] in allowed_statement_properties:
+            raise ValueError(f'Invalid statement property: {self.body[1]}')
 
         valid_motivations = ['linking', 'describing', 'classifying']
         if self.motivation in valid_motivations:
