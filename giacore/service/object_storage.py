@@ -44,14 +44,14 @@ class ObjectStorage:
 
         self.client.put_object(
             self.bucket,
-            f'{location}.xml',
+            f'{location}.rdf',
             content_bytes,
             len(content_bytes.getvalue()),
         )
 
     def get_object(self, obj: str) -> str:
         obj = self.normalize_object_name(obj)
-        response = self.client.get_object(self.bucket, f'{obj}.xml')
+        response = self.client.get_object(self.bucket, f'{obj}.rdf')
         data = response.data.decode('utf-8')
         response.close()
         response.release_conn()
@@ -60,13 +60,13 @@ class ObjectStorage:
     def object_exists(self, obj: str) -> bool:
         obj = self.normalize_object_name(obj)
         try:
-            self.client.stat_object(self.bucket, f'{obj}.xml')
+            self.client.stat_object(self.bucket, f'{obj}.rdf')
         except NoSuchKey:
             return False
         return True
 
     @staticmethod
     def normalize_object_name(obj_name: str) -> str:
-        if obj_name.endswith('.xml'):
-            return obj_name.replace('.xml', '')
+        if obj_name.endswith('.rdf'):
+            return obj_name.replace('.rdf', '')
         return obj_name
