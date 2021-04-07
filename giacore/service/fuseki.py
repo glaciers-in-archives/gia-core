@@ -21,3 +21,7 @@ class Fuseki:
         if r.status_code != 204:
             print(r.text, r.status_code)
             raise Exception
+
+    def ask(self, query: str) -> bool:
+        json_data = requests.post(f'{self.endpoint}/query', query).json()
+        return bool(json_data['boolean'])
