@@ -31,10 +31,11 @@ class Landform:
         graph.add((record, RDF.type, SCHEMA.Landform))
         graph.add((record, SCHEMA.name, Literal(self.name, lang='en')))
         graph.add((record, SCHEMA.description, Literal(self.description, lang='en')))
-        graph.add((record, SCHEMA.sameAs, self.wikidata))
-        graph.add((record, SCHEMA.relatedlink, self.wikipedia))
         graph.add((record, SCHEMA.latitude, Literal(self.latitude, datatype=XSD.decimal)))
         graph.add((record, SCHEMA.longitude, Literal(self.longitude, datatype=XSD.decimal)))
+
+        if self.wikidata: graph.add((record, SCHEMA.sameAs, self.wikidata))
+        if self.wikipedia: graph.add((record, SCHEMA.relatedlink, self.wikipedia))
 
         for part in self.parts or []:
             graph.add((record, DCTERMS.hasPart, part))
