@@ -59,3 +59,15 @@ def replace_string_store(old: str, new: str, prefix: Optional[str]=None, store_e
 def clean_index(index_endpoint=None) -> None:
     f = Fuseki(endpoint=index_endpoint)
     f.clean_index()
+
+@task
+def uri_is_used(uri: str, store_endpoint=None, store_access_key=None, store_secret_key=None) -> bool:
+    objstore = ObjectStorage(
+        bucket='record-store',
+        endpoint=store_endpoint,
+        access_key=store_access_key,
+        secret_key=store_secret_key,
+    )
+
+    local_id = uri.replace(str(GIA), '')
+    return objstore.object_exists(local_id)
