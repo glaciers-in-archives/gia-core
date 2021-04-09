@@ -14,11 +14,8 @@ class Record:
     source: URIRef
     same_as: List[URIRef] = field(repr=False)
     annotations: List[Annotation] = field(repr=False)
-    local_identifier: str = field(init=False)
+    local_identifier: str = field(default_factory=lambda:str(random.randrange(101, 100000)))
     image: Optional[URIRef] = field(default=None, repr=False)
-
-    def __post_init__(self):
-        self.local_identifier = str(random.randrange(101, 100000))
 
     @property
     def uri(self) -> URIRef:

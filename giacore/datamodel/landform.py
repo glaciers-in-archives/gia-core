@@ -13,14 +13,11 @@ class Landform:
     description: str
     latitude: float = field(repr=False)
     longitude: float = field(repr=False)
-    local_identifier: str = field(init=False)
+    local_identifier: str = field(default_factory=lambda:str(random.randrange(101, 1000)))
     wikidata: Optional[URIRef] = field(default=None, repr=False)
     wikipedia: Optional[URIRef] = field(default=None, repr=False)
     parts: Optional[List[URIRef]] = field(default=None, repr=False)
     parent: Optional[URIRef] = field(default_factory=list, repr=False)
-
-    def __post_init__(self):
-        self.local_identifier = str(random.randrange(101, 1000))
 
     @property
     def uri(self) -> URIRef:
